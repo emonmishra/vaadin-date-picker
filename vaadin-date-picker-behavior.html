@@ -458,6 +458,10 @@
       this._focus();
 
       this.updateStyles();
+
+      if (this.hasValue) {
+        this._inputChanged = false;
+      }
     },
 
     // A hack needed for iOS to prevent dropdown from being clipped in an
