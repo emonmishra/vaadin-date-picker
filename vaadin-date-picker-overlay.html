@@ -96,6 +96,7 @@
       }
 
       #scroller {
+        box-sizing: border-box;
         padding: 0 8px;
         position: absolute;
         top: 0;
@@ -268,7 +269,7 @@
 
     <div id="scrollers" desktop$="[[_desktopMode]]" on-track="_track">
       <div id="fade"></div>
-      <vaadin-infinite-scroller id="scroller" on-scroll="_onMonthScroll" on-touchstart="_onMonthScrollTouchStart" item-height="250" buffer-size="6" active="[[initialPosition]]">
+      <vaadin-infinite-scroller id="scroller" on-scroll="_onMonthScroll" on-touchstart="_onMonthScrollTouchStart" item-height="250" buffer-size="6" active="[[initialPosition]]" tabindex="0" focused="{{_scrollerFocused}}">
         <template>
           <vaadin-month-calendar
             i18n="[[i18n]]"
@@ -276,6 +277,7 @@
             selected-date="{{selectedDate}}"
             focused-date="[[focusedDate]]"
             ignore-taps="[[_ignoreTaps]]"
+            focused$="[[_scrollerFocused]]"
             show-week-numbers="[[showWeekNumbers]]"
             min-date="[[minDate]]"
             max-date="[[maxDate]]">

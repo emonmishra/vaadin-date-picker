@@ -70,6 +70,14 @@ This program is available under Apache License Version 2.0, available at https:/
     properties: {
 
       /**
+       * True when the infinite scroller gets the focus.
+       */
+      focused: {
+        type: Boolean,
+        notify: true
+      },
+
+      /**
        * Height of individual items (in pixels).
        * Changing after initialization not supported.
        */
@@ -130,7 +138,17 @@ This program is available under Apache License Version 2.0, available at https:/
 
     listeners: {
       'animationstart': '_animationStart',
-      'animationend': '_animationEnd'
+      'animationend': '_animationEnd',
+      'focus': '_onFocus',
+      'blur': '_onBlur'
+    },
+
+    _onFocus: function() {
+      this.focused = true;
+    },
+
+    _onBlur: function() {
+      this.focused = false;
     },
 
     _animationEnd: function() {
