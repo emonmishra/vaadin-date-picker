@@ -321,6 +321,7 @@
      */
     close: function() {
       this.$.dropdown.close();
+      this._focus();
     },
 
    /**
@@ -602,12 +603,10 @@
           if (this.$.overlay.focusedDate) {
             this._selectedDate = this.$.overlay.focusedDate;
           }
-          this._focus();
           this.close();
           break;
         case 'esc':
           this._focusedDate = this._selectedDate;
-          this._focus();
           this.close();
           break;
 

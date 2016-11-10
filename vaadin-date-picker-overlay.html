@@ -388,9 +388,13 @@
 
       _preventBlur: function(e) {
         if (!e.shiftKey && e.keyCode == 9) {
+          // If Tab, loop focus to input o scroller
           e.preventDefault();
           var elem = this.input || this.$.scroller;
           elem.focus();
+        } else if (e.keyCode == 13) {
+          // If Enter, avoid event being seen by date-picker
+          e.stopPropagation();
         }
       },
 
