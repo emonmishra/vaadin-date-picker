@@ -378,13 +378,19 @@
         /**
          * The latest date that can be selected. All later dates will be disabled.
          */
-        maxDate: Date
+        maxDate: Date,
+
+        /**
+         * The input element that opened this overlay. Used to pass the focus.
+         */
+        input: Element
       },
 
       _preventBlur: function(e) {
-        if (!e.shiftKey && e.key == 'Tab') {
+        if (!e.shiftKey && e.keyCode == 9) {
           e.preventDefault();
-          this.$.scroller.focus();
+          var elem = this.input || this.$.scroller;
+          elem.focus();
         }
       },
 

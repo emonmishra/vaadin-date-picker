@@ -364,7 +364,8 @@
     _focusedDateChanged: function(focusedDate, formatDate) {
       if (!this._ignoreFocusedDateChange && !this._noInput) {
         this._inputValue = focusedDate ? formatDate(focusedDate) : '';
-        this._input().setSelectionRange(0, this._inputValue.length);
+        // Doing this moves the focus from overlay to inut in Safari
+        // this._input().setSelectionRange(0, this._inputValue.length);
       }
     },
 
@@ -588,11 +589,14 @@
               this._forwardKeysToOverlay = true;
             } else {
               this.open();
+              // Open takes a while so we cannot synchronously focus
               this.async(function() {
                 this.$.overlay.$.scroller.focus();
-              }, 100);
+              }, 50)
             }
           }
+          // We always focus the overlay
+          this.$.overlay.$.scroller.focus();
           break;
         case 'enter':
           if (this.$.overlay.focusedDate) {
