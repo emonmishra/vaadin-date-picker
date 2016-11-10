@@ -600,7 +600,7 @@
           this.$.overlay.$.scroller.focus();
           break;
         case 'enter':
-          if (this.$.overlay.focusedDate) {
+          if (this.$.input.value && this.$.overlay.focusedDate) {
             this._selectedDate = this.$.overlay.focusedDate;
           }
           this.close();
