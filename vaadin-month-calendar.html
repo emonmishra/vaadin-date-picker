@@ -81,17 +81,17 @@
         @apply(--vaadin-date-picker-calendar-cell-focused);
       }
 
-      :host([focused]) #monthGrid div[focused] {
-        background: var(--primary-color);
-        color: var(--primary-background-color);
-        opacity: 1;
-      }
-
-      #monthGrid div[selected] {
+      :host(:not([focused])) #monthGrid div[selected] {
         background: var(--light-primary-color);
         box-sizing: border-box;
         border-radius: 2px;
         @apply(--vaadin-date-picker-calendar-cell-selected);
+      }
+
+      :host([focused]) #monthGrid div[focused] {
+        background: var(--primary-color);
+        color: var(--primary-background-color);
+        opacity: 1;
       }
 
       #monthGrid div[disabled] {
