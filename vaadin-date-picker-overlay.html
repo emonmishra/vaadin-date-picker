@@ -245,7 +245,8 @@
       }
 
       paper-button:focus {
-        outline: 1px solid red;
+        color: var(--primary-background-color);
+        background: var(--primary-color);
       }
     </style>
 
@@ -296,7 +297,7 @@
       <paper-button id="todayButton" disabled="[[!_isTodayAllowed(minDate, maxDate)]]" on-tap="_onTodayTap">
         [[i18n.today]]
       </paper-button>
-      <paper-button id="cancelButton" on-tap="_cancel">
+      <paper-button id="cancelButton" on-tap="_cancel" on-keydown="_preventBlur">
         [[i18n.cancel]]
       </paper-button>
     </div>
@@ -378,6 +379,13 @@
          * The latest date that can be selected. All later dates will be disabled.
          */
         maxDate: Date
+      },
+
+      _preventBlur: function(e) {
+        if (!e.shiftKey && e.key == 'Tab') {
+          e.preventDefault();
+          this.$.scroller.focus();
+        }
       },
 
       /**
@@ -693,7 +701,7 @@
        * Keyboard Navigation
        */
       _eventKey: function(e) {
-        var keys = ['down', 'up', 'right', 'left', 'enter', 'space', 'home', 'end', 'pageup', 'pagedown'];
+        var keys = ['down', 'up', 'right', 'left', 'space', 'home', 'end', 'pageup', 'pagedown'];
 
         for (var i = 0; i < keys.length; i++) {
           var k = keys[i];
@@ -704,14 +712,14 @@
       },
 
       _onKeydown: function(e) {
-        var focus = this._currentlyFocusedDate(),
-            dateToFocus;
-
+        if (!this.$.scroller.focused) {
+          return;
+        }
         var eventKey = this._eventKey(e);
         if (eventKey) {
           e.preventDefault();
           e.stopPropagation();
-
+          var focus = this._currentlyFocusedDate();
           switch (eventKey) {
             case 'down':
               this._moveFocusByDays(7);
@@ -724,9 +732,6 @@
               break;
             case 'left':
               this._moveFocusByDays(-1);
-              break;
-            case 'enter':
-              // this._close();
               break;
             case 'space':
               if (vaadin.elements.datepicker.DatePickerHelper._dateEquals(this.focusedDate, this.selectedDate)) {
