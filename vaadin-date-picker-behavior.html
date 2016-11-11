@@ -548,15 +548,6 @@
       }
     },
 
-    _blur: function() {
-      // Close the overlay when moving the focus to an element different to the overlay
-      this.async(function() {
-        if (!this.$.overlay._scrollerFocused) {
-          this.$.dropdown.close();
-        }
-      }, 50)
-    },
-
     _preventDefault: function(e) {
       e.preventDefault();
     },

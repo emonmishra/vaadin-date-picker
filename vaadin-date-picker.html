@@ -182,7 +182,7 @@ If you want to replace the default input field with a custom implementation, you
           autocomplete="off"
           type="text"
           on-focus="_focus"
-          on-blur="_blur"
+          on-keydown="_keydown"
           value="{{_userInputValue::input}}"
           name$="[[name]]"
           aria-label$="[[label]]"
@@ -305,6 +305,13 @@ If you want to replace the default input field with a custom implementation, you
       _toggle: function(e) {
         e.stopPropagation();
         this[this.$.dropdown.opened ? 'close' : 'open']();
+      },
+
+      _keydown: function(e) {
+        // User moves the focus back to the prev element
+        if (e.shiftKey && e.keyCode == 9) {
+          this.$.dropdown.close();
+        }
       },
 
       _input: function() {
