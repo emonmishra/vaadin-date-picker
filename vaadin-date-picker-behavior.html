@@ -365,8 +365,6 @@
     _focusedDateChanged: function(focusedDate, formatDate) {
       if (!this._ignoreFocusedDateChange && !this._noInput) {
         this._inputValue = focusedDate ? formatDate(focusedDate) : '';
-        // Doing this moves the focus from overlay to inut in Safari
-        // this._input().setSelectionRange(0, this._inputValue.length);
       }
     },
 
@@ -544,7 +542,8 @@
       if (this._noInput) {
         this.$.overlay.focus();
       } else {
-        this.inputElement.focus();
+        this._input().focus();
+        this._input().setSelectionRange(0, this._input().value.length);
       }
     },
 
