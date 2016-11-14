@@ -711,7 +711,7 @@
        * Keyboard Navigation
        */
       _eventKey: function(e) {
-        var keys = ['down', 'up', 'right', 'left', 'space', 'home', 'end', 'pageup', 'pagedown'];
+        var keys = ['down', 'up', 'right', 'left', 'space', 'home', 'end', 'pageup', 'pagedown', 'enter'];
 
         for (var i = 0; i < keys.length; i++) {
           var k = keys[i];
@@ -722,10 +722,18 @@
       },
 
       _onKeydown: function(e) {
+        var eventKey = this._eventKey(e);
+        if (eventKey === 'enter'){
+          if (this.$.todayButton.focused) {
+            e.stopPropagation();
+          }
+          return;
+        }
         if (!this.$.scroller.focused) {
           return;
         }
-        var eventKey = this._eventKey(e);
+
+
         if (eventKey) {
           e.preventDefault();
           e.stopPropagation();
