@@ -178,18 +178,23 @@
         });
 
         describe('year scroller contents', function() {
-          var yearScrollerContents;
+          var yearScrollerContents, scroller, animationHandler;
 
           beforeEach(function(done) {
-            var scroller = overlay.$.yearScroller;
-            scroller.active = true;
-            scroller.addEventListener('animationend', function() {
+            animationHandler = function() {
               scroller.debounce('animations-finished', function() {
                 yearScrollerContents = Polymer.dom(overlay.$.yearScroller.root)
                   .querySelectorAll('.buffer > div > *');
                 done();
               }, 100);
-            });
+            };
+            scroller = overlay.$.yearScroller;
+            scroller.active = true;
+            scroller.addEventListener('animationend', animationHandler);
+          });
+
+          afterEach(function() {
+            scroller.removeEventListener('animationend', animationHandler);
           });
 
           it('should contain button role for years', function() {
